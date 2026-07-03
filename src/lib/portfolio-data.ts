@@ -1,8 +1,4 @@
 import {
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
   Code2,
   Database,
   Server,
@@ -24,6 +20,15 @@ import {
   Component,
   Radio,
 } from "lucide-react";
+// NOTE: lucide-react in this project no longer ships brand/social icons
+// (Github/Linkedin/Twitter/Instagram were removed upstream) — sourced from
+// @tabler/icons-react instead, which is already installed for the rest of the site.
+import {
+  IconBrandGithub as Github,
+  IconBrandLinkedin as Linkedin,
+  IconBrandX as Twitter,
+  IconBrandInstagram as Instagram,
+} from "@tabler/icons-react";
 
 export const portfolioData = {
   personalInfo: {
