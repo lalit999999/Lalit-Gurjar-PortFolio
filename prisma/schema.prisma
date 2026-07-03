@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  title        String
+  description  String
+  overview     String?
+  domain       String
+  status       String   @default("Active")
+  featured     Boolean  @default(false)
+  coverImage   String
+  sourceUrl    String?
+  liveUrl      String?
+  highlights   String[]
+  keyFeatures  Json?
+  architecture String?
+  useCases     String[]
+  techStack    String[]
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SkillCategory {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  order  Int     @default(0)
+  skills Skill[]
+}
+
+model Skill {
+  id         String        @id @default(cuid())
+  name       String
+  category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+}
+
+model Certification {
+  id      String  @id @default(cuid())
+  title   String
+  issuer  String
+  iconUrl String?
+  order   Int     @default(0)
+}
+
+model Credential {
+  id    String @id @default(cuid())
+  label String
+  order Int    @default(0)
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  type        String    @default("education") // "education" | "experience"
+  level       String
+  institution String
+  score       String?
+  logoUrl     String?
+  startDate   DateTime
+  endDate     DateTime?
+  location    String
+  highlights  String[]
+  order       Int       @default(0)
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  excerpt     String?
+  coverImage  String?
+  tags        String[]
+  hashnodeUrl String
+  publishedAt DateTime
+}
+
+model ImpactStat {
+  id    String @id @default(cuid())
+  label String
+  value String
+  order Int    @default(0)
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+}
